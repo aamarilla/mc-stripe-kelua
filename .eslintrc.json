@@ -1,0 +1,34 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "semi": "error",
+    "quotes": [2, "single"],
+    "no-empty": "error",
+    "no-extra-semi": "error",
+    "consistent-return": "error",
+    "default-case": "error",
+    "eqeqeq": "warn",
+    "no-else-return": "error",
+    "camelcase": "off",
+    "arrow-parens": "warn",
+    "constructor-super": "error",
+    "no-class-assign": "error",
+    "no-useless-constructor": "error",
+    "no-var": "error",
+    "prefer-arrow-callback": "warn",
+    "prefer-const": "warn",
+    "no-empty-character-class": "error",
+    "@typescript-eslint/explicit-function-return-type": "warn",
+    "no-use-before-define": "error",
+    "@typescript-eslint/no-explicit-any": "error"
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "modules": true
+    }
+  },
+  "ignorePatterns": ["build/*"]
+}
