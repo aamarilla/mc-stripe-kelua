@@ -6,3 +6,5 @@ const router = Router();
 router.get('/', (req: Request, res: Response) => {
     response.success(res);
 })
+
+export default router;
