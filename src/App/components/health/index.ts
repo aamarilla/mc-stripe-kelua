@@ -1,10 +1,10 @@
-import { Router, Request, Response } from 'express';
-import { response } from '../../utils';
+import {Router, Request, Response} from 'express';
+import {response} from '../../utils';
 
 const router = Router();
 
 router.get('/', (req: Request, res: Response) => {
-    response.success(res);
-})
+    response.success({res, data: null});
+});
 
 export default router;
