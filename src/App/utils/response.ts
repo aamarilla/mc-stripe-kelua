@@ -15,11 +15,13 @@ export const success = ({
     status = 200,
     message = 'Successfull Request',
     success = true,
+    errorCode = 0,
 }: IResponse): void => {
     res.status(status).send({
         data,
         message,
         success,
+        errorCode,
     });
 };
 

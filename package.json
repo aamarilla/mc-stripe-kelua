@@ -20,7 +20,8 @@
     "express-fileupload": "^1.2.1",
     "fs-extra": "^9.1.0",
     "joi": "^17.4.0",
-    "jsonwebtoken": "^8.5.1"
+    "jsonwebtoken": "^8.5.1",
+    "stripe": "^8.191.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.10",

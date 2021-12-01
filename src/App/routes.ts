@@ -1,6 +1,6 @@
 import {Application} from 'express';
-import healthRoutes from './components/health';
+import paymentIntentRoutes from './components/paymentIntent';
 
 export default (app: Application) => {
-    app.use('/health', healthRoutes)
+    app.use('/payment_intent', paymentIntentRoutes);
 };
