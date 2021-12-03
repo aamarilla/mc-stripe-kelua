@@ -1,5 +1,6 @@
 import {Router} from 'express';
 import schemaValidation from '../../utils/middlewares/schemaValidation';
+import {tokenValidation} from '../../utils/middlewares/tokenValidation';
 import {PaymentIntentController} from './PaymentIntentController';
 import {
     confirmPaymentIntentSchema,
@@ -17,6 +18,7 @@ const router = Router();
 router.put(
     '/update/:paymentIntentId',
     [
+        tokenValidation,
         schemaValidation(paymentIntentIdSchema, 'params'),
         schemaValidation(updatePaymentIntentSchema),
     ],
@@ -29,7 +31,7 @@ router.put(
  */
 router.get(
     '/:paymentIntentId',
-    [schemaValidation(paymentIntentIdSchema, 'params')],
+    [tokenValidation, schemaValidation(paymentIntentIdSchema, 'params')],
     PaymentIntentController.getPaymentIntent
 );
 
@@ -38,7 +40,7 @@ router.get(
  */
 router.post(
     '/confirm',
-    [schemaValidation(confirmPaymentIntentSchema)],
+    [tokenValidation, schemaValidation(confirmPaymentIntentSchema)],
     PaymentIntentController.confirmPaymentIntent
 );
 
@@ -48,7 +50,7 @@ router.post(
  */
 router.post(
     '/create',
-    [schemaValidation(createPaymentIntentSchema)],
+    [tokenValidation, schemaValidation(createPaymentIntentSchema)],
     PaymentIntentController.createPaymentIntent
 );
 

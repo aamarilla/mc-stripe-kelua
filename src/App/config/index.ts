@@ -11,4 +11,6 @@ export default {
     publicRoute: join(__dirname, String(process.env.PUBLIC_ROUTE)),
     cryptPass: String(process.env.CRYPT_PASS),
     stripeKey: String(process.env.STRIPE_SECRET_KEY),
+    appSecretKey: String(process.env.APP_SECRET_KEY),
+    pagosGamerUrl: 'https://appdev2.piston.com.py',
 };
