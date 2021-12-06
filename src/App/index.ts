@@ -4,6 +4,7 @@ import cors from 'cors';
 import fileUpload from 'express-fileupload';
 import config from './config';
 import Routes from './routes';
+import {createProxyMiddleware} from 'http-proxy-middleware';
 
 class App {
     private app: Application;
@@ -31,6 +32,14 @@ class App {
             })
         );
         this.app.use('/public', express.static(config.publicRoute));
+        this.app.use(
+            '/api',
+            createProxyMiddleware({
+                target: 'https://appdev2.piston.com.py',
+                changeOrigin: true,
+                cookieDomainRewrite: 'localhost',
+            })
+        );
         Routes(this.app);
     }
 }

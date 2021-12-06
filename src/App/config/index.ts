@@ -13,4 +13,10 @@ export default {
     stripeKey: String(process.env.STRIPE_SECRET_KEY),
     appSecretKey: String(process.env.APP_SECRET_KEY),
     pagosGamerUrl: 'https://appdev2.piston.com.py',
+    razerUrl:
+        process.env.NODE_ENV !== 'production'
+            ? 'https://sandbox-api.mol.com'
+            : 'https://api.mol.com',
+    razerAppCode: String(process.env.RAZER_APP_CODE),
+    razerSecretKey: String(process.env.RAZER_APP_SECRET_KEY),
 };

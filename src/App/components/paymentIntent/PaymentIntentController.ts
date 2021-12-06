@@ -102,7 +102,7 @@ export class PaymentIntentController {
             });
         } catch (error) {
             // @ts-ignore
-            response.error({res, data: error.response});
+            response.error({res, data: error});
         }
     }
 }

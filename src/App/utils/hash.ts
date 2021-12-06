@@ -1,4 +1,4 @@
-import cryptoJs, {SHA256} from 'crypto-js';
+import cryptoJs, {SHA256, enc} from 'crypto-js';
 
 /**
  * @description Desencripta un texto

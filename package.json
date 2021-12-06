@@ -19,7 +19,9 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-fileupload": "^1.2.1",
+    "form-data": "^4.0.0",
     "fs-extra": "^9.1.0",
+    "http-proxy-middleware": "^2.0.1",
     "joi": "^17.4.0",
     "jsonwebtoken": "^8.5.1",
     "stripe": "^8.191.0"
