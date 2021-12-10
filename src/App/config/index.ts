@@ -15,7 +15,7 @@ export default {
     pagosGamerUrl: 'https://appdev2.piston.com.py',
     razerUrl:
         process.env.NODE_ENV !== 'production'
-            ? 'https://sandbox-api.mol.com'
+            ? 'http://sandbox-api.mol.com'
             : 'https://api.mol.com',
     razerAppCode: String(process.env.RAZER_APP_CODE),
     razerSecretKey: String(process.env.RAZER_APP_SECRET_KEY),

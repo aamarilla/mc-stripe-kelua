@@ -24,6 +24,7 @@
     "http-proxy-middleware": "^2.0.1",
     "joi": "^17.4.0",
     "jsonwebtoken": "^8.5.1",
+    "query-string": "^7.0.1",
     "stripe": "^8.191.0"
   },
   "devDependencies": {

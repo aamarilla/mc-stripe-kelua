@@ -6,6 +6,7 @@ import {ICreateOrder} from '../../interfaces/razer/createOrder.interface';
 import {createHash256, response} from '../../utils';
 import FormData from 'form-data';
 import cryptoJs from 'crypto-js';
+import qs from 'query-string';
 
 export class RazerController {
     /**
@@ -53,7 +54,19 @@ export class RazerController {
 
             const {data: initiateResponse} = await axios.post(
                 `${config.razerUrl}/pinstore/purchaseinitiation`,
-                formData
+                qs.stringify({
+                    applicationCode: config.razerAppCode,
+                    version: razerAppVersion,
+                    referenceId: orderId,
+                    productCode: productId,
+                    quantity: String(quantity),
+                    signature: initiateSignature,
+                }),
+                {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                }
             );
 
             console.log(initiateResponse);
