@@ -58,6 +58,8 @@ export class PrepaidForgeController {
 
             const {apiToken} = await PrepaidForgeController.signInAPI(email, password);
 
+            console.log('HOLA');
+
             const {data: createOrderResponse}: AxiosResponse<ICreateOrderResponse> =
                 await axios.post(
                     `${config.prepaidForgeUrl}/createApiOrder`,
