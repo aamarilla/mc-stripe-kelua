@@ -19,4 +19,5 @@ export default {
             : 'https://api.mol.com',
     razerAppCode: String(process.env.RAZER_APP_CODE),
     razerSecretKey: String(process.env.RAZER_APP_SECRET_KEY),
+    prepaidForgeUrl: 'https://api.prepaidforge.com/v1/1.0',
 };

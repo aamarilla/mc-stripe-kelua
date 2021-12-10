@@ -35,7 +35,7 @@ export const success = ({
 export const error = ({
     res,
     data = null,
-    status = 200,
+    status = 500,
     message = 'Server error',
     success = false,
     errorCode = 500,
