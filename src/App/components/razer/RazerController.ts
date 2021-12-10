@@ -31,12 +31,12 @@ export class RazerController {
 
             response.success({res, data: null});
 
-            const initiateFormData = new FormData();
-            initiateFormData.append('applicationCode', config.razerAppCode);
-            initiateFormData.append('version', razerAppVersion);
-            initiateFormData.append('referenceId', orderId);
-            initiateFormData.append('productCode', productId);
-            initiateFormData.append('quantity', String(quantity));
+            let formData = new FormData();
+            formData.append('applicationCode', config.razerAppCode);
+            formData.append('version', razerAppVersion);
+            formData.append('referenceId', orderId);
+            formData.append('productCode', productId);
+            formData.append('quantity', String(quantity));
 
             const initiateSignature = cryptoJs
                 .MD5(
@@ -49,16 +49,18 @@ export class RazerController {
                 )
                 .toString();
 
-            initiateFormData.append('signature', initiateSignature);
-
-            // console.log(initiateFormData);
+            formData.append('signature', initiateSignature);
 
             const {data: initiateResponse} = await axios.post(
                 `${config.razerUrl}/pinstore/purchaseinitiation`,
-                initiateFormData
+                formData
             );
 
             console.log(initiateResponse);
+
+            formData = new FormData();
+
+            await axios.post(returnUrl, {data: initiateResponse});
         } catch (error) {
             response.error({
                 res,
