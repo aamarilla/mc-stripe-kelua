@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, {AxiosResponse} from 'axios';
 import {Request, Response} from 'express';
 import config from '../../config';
 import {razerAppVersion} from '../../constants';
@@ -7,6 +7,7 @@ import {createHash256, response} from '../../utils';
 import FormData from 'form-data';
 import cryptoJs from 'crypto-js';
 import qs from 'query-string';
+import {IPurchaseInitiation} from '../../interfaces/razer/purchaseInitiation.interface';
 
 export class RazerController {
     /**
@@ -32,14 +33,7 @@ export class RazerController {
 
             response.success({res, data: null});
 
-            let formData = new FormData();
-            formData.append('applicationCode', config.razerAppCode);
-            formData.append('version', razerAppVersion);
-            formData.append('referenceId', orderId);
-            formData.append('productCode', productId);
-            formData.append('quantity', String(quantity));
-
-            const initiateSignature = cryptoJs
+            const signature = cryptoJs
                 .MD5(
                     config.razerAppCode +
                         productId +
@@ -50,9 +44,7 @@ export class RazerController {
                 )
                 .toString();
 
-            formData.append('signature', initiateSignature);
-
-            const {data: initiateResponse} = await axios.post(
+            const {data: initiateResponse}: AxiosResponse<IPurchaseInitiation> = await axios.post(
                 `${config.razerUrl}/pinstore/purchaseinitiation`,
                 qs.stringify({
                     applicationCode: config.razerAppCode,
@@ -60,7 +52,8 @@ export class RazerController {
                     referenceId: orderId,
                     productCode: productId,
                     quantity: String(quantity),
-                    signature: initiateSignature,
+                    signature,
+                    consumerCountryCode: 'PY',
                 }),
                 {
                     headers: {
@@ -69,9 +62,18 @@ export class RazerController {
                 }
             );
 
-            console.log(initiateResponse);
+            const {data: confirmationResponse} = await axios.post(
+                `${config.razerUrl}/pinstore/purchaseconfirmation`,
+                qs.stringify({
+                    applicationCode: config.razerAppCode,
+                    version: razerAppVersion,
+                    referenceId: orderId,
+                    validatedToken: initiateResponse.validatedToken,
+                    signature,
+                })
+            );
 
-            // formData = new FormData();
+            console.log(confirmationResponse);
 
             // await axios.post(returnUrl, {data: initiateResponse});
         } catch (error) {
