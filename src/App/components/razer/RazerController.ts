@@ -58,9 +58,9 @@ export class RazerController {
 
             console.log(initiateResponse);
 
-            formData = new FormData();
+            // formData = new FormData();
 
-            await axios.post(returnUrl, {data: initiateResponse});
+            // await axios.post(returnUrl, {data: initiateResponse});
         } catch (error) {
             response.error({
                 res,
