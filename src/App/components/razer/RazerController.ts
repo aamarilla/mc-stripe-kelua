@@ -62,6 +62,8 @@ export class RazerController {
                 }
             );
 
+            console.log(initiateResponse);
+
             const {data: confirmationResponse} = await axios.post(
                 `${config.razerUrl}/pinstore/purchaseconfirmation`,
                 qs.stringify({
@@ -70,7 +72,12 @@ export class RazerController {
                     referenceId: orderId,
                     validatedToken: initiateResponse.validatedToken,
                     signature,
-                })
+                }),
+                {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                }
             );
 
             console.log(confirmationResponse);
