@@ -63,7 +63,7 @@ export class PrepaidForgeController {
                     `${config.prepaidForgeUrl}/createApiOrder`,
                     {
                         sku,
-                        price,
+                        // price,
                         codeType,
                         customOrderReference,
                     },
