@@ -9,6 +9,7 @@ import cryptoJs from 'crypto-js';
 import qs from 'query-string';
 import {IPurchaseInitiation} from '../../interfaces/razer/purchaseInitiation.interface';
 import {IConfirmation} from '../../interfaces/razer/confirmation.interface';
+import {IProduct} from '../../interfaces/razer/product.interface';
 
 export class RazerController {
     /**
@@ -20,7 +21,7 @@ export class RazerController {
                 .MD5(config.razerAppCode + razerAppVersion + config.razerSecretKey)
                 .toString();
 
-            const {data: productsResponse} = await axios.post(
+            const {data: productsResponse}: AxiosResponse<IProduct> = await axios.post(
                 `${config.razerUrl}/pinstore/product`,
                 qs.stringify({
                     applicationCode: config.razerAppCode,
