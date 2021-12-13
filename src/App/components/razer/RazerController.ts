@@ -20,16 +20,16 @@ export class RazerController {
 
             const hashRequest = createHash256(orderId + config.appSecretKey + productId);
 
-            if (hash !== hashRequest) {
-                response.error({
-                    res,
-                    data: 'Unauthorized',
-                    errorCode: -1,
-                    message: 'User not authorized',
-                    status: 401,
-                });
-                return;
-            }
+            // if (hash !== hashRequest) {
+            //     response.error({
+            //         res,
+            //         data: 'Unauthorized',
+            //         errorCode: -1,
+            //         message: 'User not authorized',
+            //         status: 401,
+            //     });
+            //     return;
+            // }
 
             response.success({res, data: null});
 
