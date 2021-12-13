@@ -33,7 +33,7 @@ export class RazerController {
 
             response.success({res, data: null});
 
-            const signature = cryptoJs
+            const initiateSignature = cryptoJs
                 .MD5(
                     config.razerAppCode +
                         productId +
@@ -52,7 +52,7 @@ export class RazerController {
                     referenceId: orderId,
                     productCode: productId,
                     quantity: String(quantity),
-                    signature,
+                    signature: initiateSignature,
                     consumerCountryCode: 'PY',
                 }),
                 {
@@ -62,7 +62,16 @@ export class RazerController {
                 }
             );
 
-            console.log(initiateResponse);
+            const confirmationSignature = cryptoJs
+                .MD5(
+                    config.razerAppCode +
+                        config.razerAppCode +
+                        orderId +
+                        razerAppVersion +
+                        initiateResponse.validatedToken +
+                        config.razerSecretKey
+                )
+                .toString();
 
             const {data: confirmationResponse} = await axios.post(
                 `${config.razerUrl}/pinstore/purchaseconfirmation`,
@@ -71,7 +80,7 @@ export class RazerController {
                     version: razerAppVersion,
                     referenceId: orderId,
                     validatedToken: initiateResponse.validatedToken,
-                    signature,
+                    signature: confirmationSignature,
                 }),
                 {
                     headers: {
