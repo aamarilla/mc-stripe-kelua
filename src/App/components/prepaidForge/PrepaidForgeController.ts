@@ -23,7 +23,7 @@ export class PrepaidForgeController {
             const {apiToken} = await PrepaidForgeController.signInAPI(email, password);
 
             const {data: stockResponse}: AxiosResponse<IStock[]> = await axios.post(
-                '/findStocks',
+                `${config.prepaidForgeUrl}/findStocks`,
                 {
                     types: [EPrepaidForgeCodeType.Scan, EPrepaidForgeCodeType.Text],
                     skus,
