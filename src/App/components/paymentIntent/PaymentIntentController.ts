@@ -2,7 +2,7 @@ import axios from 'axios';
 import {Request, Response} from 'express';
 import config from '../../config';
 import {stripe} from '../../constants';
-import {EPaymentMethod} from '../../enum/paymentMethod.enum';
+import {EPaymentMethod} from '../../enums/paymentMethod.enum';
 import {IConfirmPaymentIntent} from '../../interfaces/paymentIntent/confirmPaymentIntent.interface';
 import {ICreatePaymentIntent} from '../../interfaces/paymentIntent/createPaymentIntent.interface';
 import {IPaymentCart} from '../../interfaces/paymentIntent/paymentCart.interface';

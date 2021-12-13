@@ -1,9 +1,15 @@
 import {Router} from 'express';
 import schemaValidation from '../../utils/middlewares/schemaValidation';
 import {PrepaidForgeController} from './PrepaidForgeController';
-import {createOrderSchema, getBalanceSchema} from './schemas';
+import {createOrderSchema, getBalanceSchema, getStockSchema} from './schemas';
 
 const router = Router();
+
+/**
+ * @description Obtiene el stock de un producto
+ * @method POST
+ */
+router.post('/stock', [schemaValidation(getStockSchema)], PrepaidForgeController.getStockBySku);
 
 /**
  * @description Obtiene el balance de ¨Prepaid Forge

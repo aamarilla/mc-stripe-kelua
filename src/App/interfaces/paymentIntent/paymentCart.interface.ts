@@ -1,4 +1,4 @@
-import {EPaymentMethod} from '../../enum/paymentMethod.enum';
+import {EPaymentMethod} from '../../enums/paymentMethod.enum';
 
 export interface IPaymentCart {
     metodo: EPaymentMethod;

@@ -8,8 +8,39 @@ import {ICreateOrderResponse} from '../../interfaces/prepaidForge/createOrderRes
 import {IProduct} from '../../interfaces/prepaidForge/product.interface';
 import {IGetBalance} from '../../interfaces/prepaidForge/getBalance.interface';
 import {IBalance} from '../../interfaces/prepaidForge/balance.interface';
+import {IGetStockBySku} from '../../interfaces/prepaidForge/getStockBySku.interface';
+import {IStock} from '../../interfaces/prepaidForge/stock.interface';
+import {EPrepaidForgeCodeType} from '../../enums/prepaidForgeCodeType.enum';
 
 export class PrepaidForgeController {
+    /**
+     * @description Obtiene el stock de un producto
+     */
+    public static async getStockBySku(req: Request, res: Response): Promise<void> {
+        try {
+            const {skus, email, password} = req.body as IGetStockBySku;
+
+            const {apiToken} = await PrepaidForgeController.signInAPI(email, password);
+
+            const {data: stockResponse}: AxiosResponse<IStock[]> = await axios.post(
+                '/findStocks',
+                {
+                    types: [EPrepaidForgeCodeType.Scan, EPrepaidForgeCodeType.Text],
+                    skus,
+                },
+                {
+                    headers: {
+                        'x-prepaidforge-api-token': apiToken,
+                    },
+                }
+            );
+
+            response.success({res, data: stockResponse});
+        } catch (error) {
+            response.error({res, data: error});
+        }
+    }
+
     /**
      * @description Obtiene el balance de Prepaid Forge
      */
@@ -58,14 +89,12 @@ export class PrepaidForgeController {
 
             const {apiToken} = await PrepaidForgeController.signInAPI(email, password);
 
-            console.log('HOLA');
-
             const {data: createOrderResponse}: AxiosResponse<ICreateOrderResponse> =
                 await axios.post(
                     `${config.prepaidForgeUrl}/createApiOrder`,
                     {
                         sku,
-                        // price,
+                        price,
                         codeType,
                         customOrderReference,
                     },

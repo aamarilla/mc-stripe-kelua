@@ -1,5 +1,11 @@
-import Joi from 'joi';
+import Joi, {string} from 'joi';
 import {JoiNumber, JoiString} from '../../constants/joi';
+
+export const getStockSchema = Joi.object({
+    email: JoiString,
+    password: string,
+    skus: Joi.array().items(JoiString),
+});
 
 export const getBalanceSchema = Joi.object({
     email: JoiString,
