@@ -62,6 +62,8 @@ export class RazerController {
                 }
             );
 
+            console.log(initiateResponse);
+
             const confirmationSignature = cryptoJs
                 .MD5(
                     config.razerAppCode +
