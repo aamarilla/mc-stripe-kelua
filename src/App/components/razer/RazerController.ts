@@ -8,8 +8,38 @@ import FormData from 'form-data';
 import cryptoJs from 'crypto-js';
 import qs from 'query-string';
 import {IPurchaseInitiation} from '../../interfaces/razer/purchaseInitiation.interface';
+import {IConfirmation} from '../../interfaces/razer/confirmation.interface';
 
 export class RazerController {
+    /**
+     * @description Obiene los productos de Razer
+     */
+    public static async getProducts(req: Request, res: Response): Promise<void> {
+        try {
+            const signature = cryptoJs
+                .MD5(config.razerAppCode + razerAppVersion + config.razerSecretKey)
+                .toString();
+
+            const {data: productsResponse} = await axios.post(
+                `${config.razerUrl}/pinstore/product`,
+                qs.stringify({
+                    applicationCode: config.razerAppCode,
+                    version: razerAppVersion,
+                    signature,
+                }),
+                {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                }
+            );
+
+            response.success({res, data: productsResponse});
+        } catch (error) {
+            response.error({res, data: error});
+        }
+    }
+
     /**
      * @description Crea un pedido
      */
@@ -20,16 +50,16 @@ export class RazerController {
 
             const hashRequest = createHash256(orderId + config.appSecretKey + productId);
 
-            // if (hash !== hashRequest) {
-            //     response.error({
-            //         res,
-            //         data: 'Unauthorized',
-            //         errorCode: -1,
-            //         message: 'User not authorized',
-            //         status: 401,
-            //     });
-            //     return;
-            // }
+            if (hash !== hashRequest) {
+                response.error({
+                    res,
+                    data: 'Unauthorized',
+                    errorCode: -1,
+                    message: 'User not authorized',
+                    status: 401,
+                });
+                return;
+            }
 
             response.success({res, data: null});
 
@@ -53,7 +83,6 @@ export class RazerController {
                     productCode: productId,
                     quantity: String(quantity),
                     signature: initiateSignature,
-                    consumerCountryCode: 'PY',
                 }),
                 {
                     headers: {
@@ -61,8 +90,6 @@ export class RazerController {
                     },
                 }
             );
-
-            console.log(initiateResponse);
 
             const confirmationSignature = cryptoJs
                 .MD5(
@@ -74,7 +101,7 @@ export class RazerController {
                 )
                 .toString();
 
-            const {data: confirmationResponse} = await axios.post(
+            const {data: confirmationResponse}: AxiosResponse<IConfirmation> = await axios.post(
                 `${config.razerUrl}/pinstore/purchaseconfirmation`,
                 qs.stringify({
                     applicationCode: config.razerAppCode,
@@ -90,9 +117,7 @@ export class RazerController {
                 }
             );
 
-            console.log(confirmationResponse);
-
-            // await axios.post(returnUrl, {data: initiateResponse});
+            await axios.post(returnUrl, {data: confirmationResponse});
         } catch (error) {
             response.error({
                 res,

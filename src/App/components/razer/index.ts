@@ -6,6 +6,12 @@ import {createOrderSchema} from './schemas';
 const router = Router();
 
 /**
+ * @description Obtiene los productos de Razer
+ * @method GET
+ */
+router.get('/products', RazerController.getProducts);
+
+/**
  * @description Crea un pedido
  * @method POST
  */
