@@ -67,7 +67,6 @@ export class RazerController {
             const confirmationSignature = cryptoJs
                 .MD5(
                     config.razerAppCode +
-                        config.razerAppCode +
                         orderId +
                         razerAppVersion +
                         initiateResponse.validatedToken +
