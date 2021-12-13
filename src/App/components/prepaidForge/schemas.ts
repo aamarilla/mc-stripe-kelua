@@ -3,7 +3,7 @@ import {JoiNumber, JoiString} from '../../constants/joi';
 
 export const getStockSchema = Joi.object({
     email: JoiString,
-    password: string,
+    password: JoiString,
     skus: Joi.array().items(JoiString),
 });
 
