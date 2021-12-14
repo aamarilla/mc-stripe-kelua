@@ -80,17 +80,17 @@ export class PaymentIntentController {
                 hash: createHash256(amount + config.appSecretKey),
             };
 
-            const paymentResponse = await axios.post(
-                `${config.pagosGamerUrl}/api/carrito/pagar`,
-                paymentCart,
-                {
-                    headers: {
-                        authorization: req.headers.authorization as string,
-                    },
-                }
-            );
+            // const paymentResponse = await axios.post(
+            //     `${config.pagosGamerUrl}/api/carrito/pagar`,
+            //     paymentCart,
+            //     {
+            //         headers: {
+            //             authorization: req.headers.authorization as string,
+            //         },
+            //     }
+            // );
 
-            console.log(paymentResponse);
+            // console.log(paymentResponse);
 
             response.success({
                 res,

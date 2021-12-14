@@ -4,7 +4,6 @@ import config from '../../config';
 import {razerAppVersion} from '../../constants';
 import {ICreateOrder} from '../../interfaces/razer/createOrder.interface';
 import {createHash256, response} from '../../utils';
-import FormData from 'form-data';
 import cryptoJs from 'crypto-js';
 import qs from 'query-string';
 import {IPurchaseInitiation} from '../../interfaces/razer/purchaseInitiation.interface';
