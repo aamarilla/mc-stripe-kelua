@@ -1,13 +1,9 @@
-import axios from 'axios';
 import {Request, Response} from 'express';
-import config from '../../config';
 import {stripe} from '../../constants';
-import {EPaymentMethod} from '../../enums/paymentMethod.enum';
 import {IConfirmPaymentIntent} from '../../interfaces/paymentIntent/confirmPaymentIntent.interface';
 import {ICreatePaymentIntent} from '../../interfaces/paymentIntent/createPaymentIntent.interface';
-import {IPaymentCart} from '../../interfaces/paymentIntent/paymentCart.interface';
 import {IUpdatePaymentIntent} from '../../interfaces/paymentIntent/updatePaymentIntent.interface';
-import {convertToCents, PYGToUSD, response, createHash256} from '../../utils';
+import {convertToCents, PYGToUSD, response} from '../../utils';
 
 export class PaymentIntentController {
     /**
@@ -73,24 +69,6 @@ export class PaymentIntentController {
                     enabled: true,
                 },
             });
-
-            const paymentCart: IPaymentCart = {
-                metodo: EPaymentMethod.Stripe,
-                monto: amount,
-                hash: createHash256(amount + config.appSecretKey),
-            };
-
-            // const paymentResponse = await axios.post(
-            //     `${config.pagosGamerUrl}/api/carrito/pagar`,
-            //     paymentCart,
-            //     {
-            //         headers: {
-            //             authorization: req.headers.authorization as string,
-            //         },
-            //     }
-            // );
-
-            // console.log(paymentResponse);
 
             response.success({
                 res,

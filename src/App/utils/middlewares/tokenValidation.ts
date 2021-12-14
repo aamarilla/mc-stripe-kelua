@@ -3,8 +3,10 @@ import {decrypt} from '..';
 import config from '../../config';
 
 export const tokenValidation = (req: Request, res: Response, next: NextFunction): void => {
-    const bodyDecrypt = decrypt(String(req.body), config.appSecretKey);
+    if (req.method !== 'GET' && req.method !== 'DELETE') {
+        const bodyDecrypt = decrypt(String(req.body), config.appSecretKey);
 
-    req.body = JSON.parse(bodyDecrypt);
+        req.body = JSON.parse(bodyDecrypt);
+    }
     next();
 };
