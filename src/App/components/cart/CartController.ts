@@ -11,7 +11,7 @@ export class CartController {
     public static async closeCart(req: Request, res: Response): Promise<void> {
         try {
             const {amount, hash, method, paymentId} = req.body as ICloseCart;
-
+            console.log(paymentId + amount + config.appSecretKey);
             const hashVerify = createHash256(paymentId + amount + config.appSecretKey);
 
             if (hashVerify !== hash) {
