@@ -13,7 +13,7 @@ export class CartController {
             const {amount, hash, method, paymentId} = req.body as ICloseCart;
             console.log(String(paymentId) + '/' + String(amount) + '/' + config.appSecretKey);
             const hashVerify = createHash256(
-                String(paymentId) + String(amount) + config.appSecretKey
+                String(paymentId) + amount.toFixed(2) + config.appSecretKey
             );
 
             if (hashVerify !== hash) {
