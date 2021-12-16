@@ -11,10 +11,11 @@ export class CartController {
     public static async closeCart(req: Request, res: Response): Promise<void> {
         try {
             const {amount, hash, method, paymentId} = req.body as ICloseCart;
-            console.log(String(paymentId) + '/' + String(amount) + '/' + config.appSecretKey);
             const hashVerify = createHash256(
                 String(paymentId) + amount.toFixed(2) + config.appSecretKey
             );
+            console.log(String(paymentId) + String(amount) + config.appSecretKey);
+            console.log(hashVerify);
 
             if (hashVerify !== hash) {
                 response.success({
