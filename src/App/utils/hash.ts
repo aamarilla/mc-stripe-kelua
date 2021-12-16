@@ -16,5 +16,6 @@ export const decrypt = (ciphertext: string, key: string): string => {
  * @return {string}
  */
 export const createHash256 = (content: string): string => {
+    console.log(content);
     return SHA256(content).toString();
 };
