@@ -1,7 +1,12 @@
 import {Router} from 'express';
 import schemaValidation from '../../utils/middlewares/schemaValidation';
 import {PrepaidForgeController} from './PrepaidForgeController';
-import {createOrderSchema, getBalanceSchema, getStockSchema} from './schemas';
+import {
+    createOrderSchema,
+    getBalanceSchema,
+    getProductsQuerySchema,
+    getStockSchema,
+} from './schemas';
 
 const router = Router();
 
@@ -21,7 +26,11 @@ router.post('/balance', [schemaValidation(getBalanceSchema)], PrepaidForgeContro
  * @description Obtiene los productos
  * @method GET
  */
-router.get('/products', PrepaidForgeController.getProducts);
+router.get(
+    '/products',
+    [schemaValidation(getProductsQuerySchema, 'query')],
+    PrepaidForgeController.getProducts
+);
 
 /**
  * @description Crea una orden

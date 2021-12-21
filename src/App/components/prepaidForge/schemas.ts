@@ -1,5 +1,10 @@
 import Joi, {string} from 'joi';
-import {JoiNumber, JoiString} from '../../constants/joi';
+import {JoiNumber, JoiNumberOptional, JoiString} from '../../constants/joi';
+
+export const getProductsQuerySchema = Joi.object({
+    pageSize: JoiNumberOptional,
+    page: JoiNumberOptional,
+});
 
 export const getStockSchema = Joi.object({
     email: JoiString,

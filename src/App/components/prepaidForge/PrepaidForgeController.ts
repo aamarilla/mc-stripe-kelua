@@ -69,11 +69,28 @@ export class PrepaidForgeController {
      */
     public static async getProducts(req: Request, res: Response): Promise<void> {
         try {
-            const {data: productsResponse}: AxiosResponse<IProduct[]> = await axios.get(
-                `${config.prepaidForgeUrl}/findAllProducts`
-            );
+            const {pageSize, page} = req.query;
 
-            response.success({res, data: productsResponse});
+            let dataResponse: IProduct[] = [];
+
+            if (!pageSize || !page) {
+                const {data: productsResponse}: AxiosResponse<IProduct[]> = await axios.get(
+                    `${config.prepaidForgeUrl}/findAllProducts`
+                );
+
+                dataResponse = productsResponse;
+            } else {
+                const {data: productsResponse}: AxiosResponse<IProduct[]> = await axios.post(
+                    `${config.prepaidForgeUrl}/findProductPage`,
+                    {
+                        page: Number(page),
+                        pageSize: Number(pageSize),
+                    }
+                );
+                dataResponse = productsResponse;
+            }
+
+            response.success({res, data: dataResponse});
         } catch (error) {
             response.error({res, data: error});
         }
