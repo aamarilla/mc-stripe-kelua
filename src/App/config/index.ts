@@ -23,4 +23,8 @@ export default {
     pagoparUrl: 'https://api.pagopar.com/api',
     pagoparPrivateKey: String(process.env.PAGOPAR_PRIVATE_TOKEN),
     pagoparPublicKey: String(process.env.PAGOPAR_PUBLIC_TOKEN),
+    dbUser: String(process.env.DB_USER),
+    dbPassword: String(process.env.DB_PASSWORD),
+    dbPort: String(process.env.DB_PORT),
+    dbName: String(process.env.DB_NAME),
 };
