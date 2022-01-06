@@ -20,4 +20,7 @@ export default {
     razerAppCode: String(process.env.RAZER_APP_CODE),
     razerSecretKey: String(process.env.RAZER_APP_SECRET_KEY),
     prepaidForgeUrl: 'https://api.prepaidforge.com/v1/1.0',
+    pagoparUrl: 'https://api.pagopar.com/api',
+    pagoparPrivateKey: String(process.env.PAGOPAR_PRIVATE_TOKEN),
+    pagoparPublicKey: String(process.env.PAGOPAR_PUBLIC_TOKEN),
 };
