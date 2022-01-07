@@ -6,6 +6,12 @@ import {createOrderSchema} from './schemas';
 const router = Router();
 
 /**
+ * @description Endpoint de respuesta de un pago PARA Pagopar
+ * @method POST
+ */
+router.post('/respuesta', PagoParController.responseOrder);
+
+/**
  * @description Crea una orden de pago
  * @method POST
  */

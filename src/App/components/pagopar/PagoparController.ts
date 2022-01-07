@@ -7,6 +7,18 @@ import axios from 'axios';
 
 export class PagoParController {
     /**
+     * @description Enpoint de respuesta PARA Pagopar
+     */
+    public static async responseOrder(req: Request, res: Response): Promise<void> {
+        try {
+            console.log(req.body, req.params, req.query);
+            response.success({res, data: null});
+        } catch (error) {
+            response.error({res, data: error});
+        }
+    }
+
+    /**
      * @description Crea el pedido de pagopar
      */
     public static async createOrder(req: Request, res: Response): Promise<void> {
