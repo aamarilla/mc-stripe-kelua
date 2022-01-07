@@ -13,5 +13,5 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "exclude": ["./ecosystem.config.js"]
+  "include": ["./ecosystem.config.js"]
 }
