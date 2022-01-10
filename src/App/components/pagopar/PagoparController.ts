@@ -26,7 +26,7 @@ export class PagoParController {
             const {buyer, items, orderId, totalAmount} = req.body as ICreateOrder;
             const {address, ci, email, name, phone, ruc} = buyer;
 
-            const date = new Date();
+            const date = new Date(Date.now() - new Date().getTimezoneOffset());
             date.setDate(date.getDate() + 1);
             const year = date.getFullYear();
             const month =
