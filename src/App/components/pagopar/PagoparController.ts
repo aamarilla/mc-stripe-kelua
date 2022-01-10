@@ -4,6 +4,9 @@ import {response} from '../../utils';
 import CryptoJS from 'crypto-js';
 import config from '../../config';
 import axios from 'axios';
+import {IOrderResponse} from '../../interfaces/pagopar/orderResponse.interface';
+import {IInsert, insertOne} from '../../Database';
+import {ETables} from '../../enums/tables.enum';
 
 export class PagoParController {
     /**
@@ -11,8 +14,13 @@ export class PagoParController {
      */
     public static async responseOrder(req: Request, res: Response): Promise<void> {
         try {
-            console.log(req.body, req.params, req.query);
-            response.success({res, data: null});
+            const pagoparResponse = req.body as IOrderResponse;
+            const dataIncoming: IInsert[] = [
+                {column: 'pagopar_order_hash', value: pagoparResponse.resultado[0].hash_pedido},
+                {column: 'pagopar_order_token', value: pagoparResponse.resultado[0].token},
+            ];
+            await insertOne(ETables.PagoparOrder, dataIncoming);
+            response.success({res, data: req.body});
         } catch (error) {
             response.error({res, data: error});
         }
@@ -41,8 +49,6 @@ export class PagoParController {
                 `${String(date.getSeconds()).length === 1 ? '0' : ''}` + date.getSeconds();
             const time = `${hours}:${minutes}:${seconds}`;
             const fechaMaximaPago = `${year}-${month}-${day} ${time}`;
-
-            console.log(fechaMaximaPago);
 
             const createOrderBody = {
                 token: CryptoJS.SHA1(
