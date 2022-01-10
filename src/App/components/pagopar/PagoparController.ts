@@ -19,7 +19,8 @@ export class PagoParController {
                 {column: 'pagopar_order_hash', value: pagoparResponse.resultado[0].hash_pedido},
                 {column: 'pagopar_order_token', value: pagoparResponse.resultado[0].token},
             ];
-            await insertOne(ETables.PagoparOrder, dataIncoming);
+            const insertResponse = await insertOne(ETables.PagoparOrder, dataIncoming);
+            console.log(insertResponse);
             response.success({res, data: req.body});
         } catch (error) {
             response.error({res, data: error});
