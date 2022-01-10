@@ -15,7 +15,7 @@ module.exports = {
             "RAZER_APP_CODE":"202102160443",
             "RAZER_APP_SECRET_KEY":"lbrb4964",
             "DB_USER": "root",
-            "DB_PASSWORD": "admin",
+            "DB_PASSWORD": "keluaadmin",
             "DB_PORT": 3306,
             "DB_NAME": "kelua_payment"
           }
