@@ -36,7 +36,7 @@ export class PagoParController {
                 (date.getDate().toString().length === 1 ? '0' : '') + date.getDate().toString();
             const fechaMaximaPago = `${year}-${month}-${day} ${date.toLocaleTimeString()}`;
 
-            console.log(config, process.env);
+            console.log(fechaMaximaPago);
 
             const createOrderBody = {
                 token: CryptoJS.SHA1(
