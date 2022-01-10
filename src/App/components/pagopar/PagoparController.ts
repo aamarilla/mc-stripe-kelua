@@ -27,6 +27,8 @@ export class PagoParController {
                 token_publico: config.pagoparPublicKey,
             };
 
+            console.log(pagoparBody);
+
             const {data: pagoparResponse} = await axios.post(
                 `${config.pagoparUrl}/pedidos/1.1/traer`,
                 pagoparBody
