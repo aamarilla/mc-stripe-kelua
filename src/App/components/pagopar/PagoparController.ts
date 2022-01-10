@@ -34,11 +34,13 @@ export class PagoParController {
                 (date.getMonth() + 1).toString();
             const day =
                 (date.getDate().toString().length === 1 ? '0' : '') + date.getDate().toString();
-            const fechaMaximaPago = `${year}-${month}-${day} ${date
-                .toLocaleTimeString()
-                .replace('PM', '')
-                .replace('AM', '')
-                .trim()}`;
+            const hours = `${String(date.getHours()).length === 1 ? '0' : ''}` + date.getHours();
+            const minutes =
+                `${String(date.getMinutes()).length === 1 ? '0' : ''}` + date.getMinutes();
+            const seconds =
+                `${String(date.getSeconds()).length === 1 ? '0' : ''}` + date.getSeconds();
+            const time = `${hours}:${minutes}:${seconds}`;
+            const fechaMaximaPago = `${year}-${month}-${day} ${time}`;
 
             console.log(fechaMaximaPago);
 
