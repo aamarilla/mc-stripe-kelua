@@ -12,6 +12,5 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
-  },
-  "exclude": ["./ecosystem,config.js"]
+  }
 }
