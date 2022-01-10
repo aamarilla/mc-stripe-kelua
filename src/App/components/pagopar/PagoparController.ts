@@ -34,7 +34,7 @@ export class PagoParController {
                 (date.getMonth() + 1).toString();
             const day =
                 (date.getDate().toString().length === 1 ? '0' : '') + date.getDate().toString();
-            const fechaMaximaPago = `${year}-${month}-${day} ${date.toLocaleTimeString()}`;
+            const fechaMaximaPago = `${year}-${day}-${month} ${date.toLocaleTimeString()}`;
 
             console.log(fechaMaximaPago);
 
