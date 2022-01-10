@@ -23,11 +23,9 @@ export class PagoParController {
 
             const pagoparBody = {
                 hash_pedido: payment.pagopar_order_hash,
-                token: CryptoJS.SHA1(config.pagoparPrivateKey + 'CONSULTA'),
+                token: CryptoJS.SHA1(config.pagoparPrivateKey + 'CONSULTA').toString(),
                 token_publico: config.pagoparPublicKey,
             };
-
-            console.log(pagoparBody);
 
             const {data: pagoparResponse} = await axios.post(
                 `${config.pagoparUrl}/pedidos/1.1/traer`,
