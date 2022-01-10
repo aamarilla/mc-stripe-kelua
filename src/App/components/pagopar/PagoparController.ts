@@ -5,10 +5,37 @@ import CryptoJS from 'crypto-js';
 import config from '../../config';
 import axios from 'axios';
 import {IOrderResponse} from '../../interfaces/pagopar/orderResponse.interface';
-import {IInsert, insertOne} from '../../Database';
+import {find, IInsert, insertOne} from '../../Database';
 import {ETables} from '../../enums/tables.enum';
+import {IPagopar} from '../../interfaces/pagopar/pagopar.interface';
 
 export class PagoParController {
+    /**
+     * @description Obtiene el detalle de un pago de pagopar
+     */
+    public static async getPayment(req: Request, res: Response): Promise<void> {
+        try {
+            const {hash} = req.params;
+
+            const [payment]: IPagopar[] = await find(ETables.PagoparOrder, [
+                {search: 'pagopar_order_hash', value: hash},
+            ]);
+
+            const {data: pagoparResponse} = await axios.post(
+                `${config.pagoparUrl}/pedidos/1.1/traer`,
+                {
+                    hash_pedido: payment.pagopar_order_hash,
+                    token: payment.pagopar_order_token,
+                    token_publico: config.pagoparPublicKey,
+                }
+            );
+
+            response.success({res, data: pagoparResponse});
+        } catch (error) {
+            response.error({res, data: error});
+        }
+    }
+
     /**
      * @description Enpoint de respuesta PARA Pagopar
      */

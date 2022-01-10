@@ -6,6 +6,12 @@ import {createOrderSchema} from './schemas';
 const router = Router();
 
 /**
+ * @description Obtiene los detalles de un pago de pagopar
+ * @method GET
+ */
+router.get('/:hash', PagoParController.getPayment);
+
+/**
  * @description Endpoint de respuesta de un pago PARA Pagopar
  * @method POST
  */
