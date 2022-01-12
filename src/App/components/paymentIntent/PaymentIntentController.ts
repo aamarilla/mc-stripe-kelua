@@ -7,24 +7,6 @@ import {convertToCents, PYGToUSD, response} from '../../utils';
 
 export class PaymentIntentController {
     /**
-     * @description Actualiza un intento de pago
-     */
-    public static async updatePaymentIntent(req: Request, res: Response): Promise<void> {
-        try {
-            const {paymentIntentId} = req.params;
-            const {amount} = req.body as IUpdatePaymentIntent;
-
-            const paymentIntent = await stripe.paymentIntents.update(paymentIntentId, {
-                amount: convertToCents(PYGToUSD(amount)),
-            });
-
-            response.success({res, data: paymentIntent});
-        } catch (error) {
-            response.error({res, data: error});
-        }
-    }
-
-    /**
      * @description Obtiene un intento de pago
      */
     public static async getPaymentIntent(req: Request, res: Response): Promise<void> {
@@ -34,21 +16,6 @@ export class PaymentIntentController {
             const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
 
             response.success({res, data: paymentIntent});
-        } catch (error) {
-            response.error({res, data: error});
-        }
-    }
-
-    /**
-     * @description Confirma un intento de pago
-     */
-    public static async confirmPaymentIntent(req: Request, res: Response): Promise<void> {
-        try {
-            const {paymentIntentId} = req.body as IConfirmPaymentIntent;
-
-            const confirmPaymentIntent = await stripe.paymentIntents.confirm(paymentIntentId);
-
-            response.success({res, data: confirmPaymentIntent});
         } catch (error) {
             response.error({res, data: error});
         }
