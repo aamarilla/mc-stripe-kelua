@@ -22,4 +22,5 @@ export const createOrderSchema = Joi.object({
         })
     ),
     orderId: JoiNumber,
+    hash: JoiString,
 });

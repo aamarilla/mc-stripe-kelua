@@ -61,8 +61,25 @@ export class PagoParController {
      */
     public static async createOrder(req: Request, res: Response): Promise<void> {
         try {
-            const {buyer, items, orderId, totalAmount} = req.body as ICreateOrder;
+            const {buyer, items, orderId, totalAmount, hash} = req.body as ICreateOrder;
             const {address, ci, email, name, phone, ruc} = buyer;
+
+            if (
+                hash !==
+                CryptoJS.SHA256(
+                    String(orderId) + String(totalAmount) + config.appSecretKey
+                ).toString()
+            ) {
+                response.error({
+                    res,
+                    data: 'UNAUTHORIZED',
+                    errorCode: -1,
+                    message: 'Unauthorized',
+                    status: 401,
+                    success: false,
+                });
+                return;
+            }
 
             const date = new Date(Date.now() - new Date().getTimezoneOffset());
             date.setDate(date.getDate() + 1);

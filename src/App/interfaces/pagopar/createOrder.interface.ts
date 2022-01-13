@@ -17,4 +17,5 @@ export interface ICreateOrder {
         description: string | null;
     }[];
     orderId: number;
+    hash: string;
 }
