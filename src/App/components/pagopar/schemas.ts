@@ -1,5 +1,11 @@
-import Joi from 'joi';
+import Joi, {string} from 'joi';
 import {JoiNumber, JoiString, JoiStringOptional} from '../../constants/joi';
+
+export const getPaymentSchema = Joi.object({
+    hash: JoiString,
+    orderId: JoiNumber,
+    amount: JoiNumber,
+});
 
 export const createOrderSchema = Joi.object({
     buyer: Joi.object({

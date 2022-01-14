@@ -3,11 +3,13 @@ import {ICreateOrder} from '../../interfaces/pagopar/createOrder.interface';
 import {response} from '../../utils';
 import CryptoJS from 'crypto-js';
 import config from '../../config';
-import axios from 'axios';
+import axios, {AxiosResponse} from 'axios';
 import {IOrderResponse} from '../../interfaces/pagopar/orderResponse.interface';
 import {find, IInsert, insertOne} from '../../Database';
 import {ETables} from '../../enums/tables.enum';
 import {IPagopar} from '../../interfaces/pagopar/pagopar.interface';
+import {ICreateOrderResponse} from '../../interfaces/pagopar/createOrderResponse.interface';
+import {IGetPayment} from '../../interfaces/pagopar/getPayment.interface';
 
 export class PagoParController {
     /**
@@ -15,10 +17,25 @@ export class PagoParController {
      */
     public static async getPayment(req: Request, res: Response): Promise<void> {
         try {
-            const {hash} = req.params;
+            const {amount, hash, orderId} = req.body as IGetPayment;
+
+            if (
+                hash !==
+                CryptoJS.SHA256(String(orderId) + String(amount) + config.appSecretKey).toString()
+            ) {
+                response.error({
+                    res,
+                    data: 'UNAUTHORIZED',
+                    errorCode: -1,
+                    message: 'Unauthorized',
+                    status: 401,
+                    success: false,
+                });
+                return;
+            }
 
             const [payment]: IPagopar[] = await find(ETables.PagoparOrder, [
-                {search: 'pagopar_order_hash', value: hash},
+                {search: 'pagopar_order_id', value: orderId},
             ]);
 
             const pagoparBody = {
@@ -44,13 +61,7 @@ export class PagoParController {
     public static async responseOrder(req: Request, res: Response): Promise<void> {
         try {
             const pagoparResponse = req.body as IOrderResponse;
-            const dataIncoming: IInsert[] = [
-                {column: 'pagopar_order_hash', value: pagoparResponse.resultado[0].hash_pedido},
-                {column: 'pagopar_order_token', value: pagoparResponse.resultado[0].token},
-            ];
-            const insertResponse = await insertOne(ETables.PagoparOrder, dataIncoming);
-            console.log(insertResponse);
-            response.success({res, data: req.body});
+            response.success({res, data: pagoparResponse});
         } catch (error) {
             response.error({res, data: error});
         }
@@ -137,10 +148,16 @@ export class PagoParController {
                 fecha_maxima_pago: fechaMaximaPago,
             };
 
-            const {data: createResponse} = await axios.post(
+            const {data: createResponse}: AxiosResponse<ICreateOrderResponse> = await axios.post(
                 `${config.pagoparUrl}/comercios/1.1/iniciar-transaccion`,
                 createOrderBody
             );
+
+            const dataIncoming: IInsert[] = [
+                {column: 'pagopar_order_hash', value: createResponse.resultado[0].data},
+                {column: 'pagopar_order_id', value: orderId},
+            ];
+            await insertOne(ETables.PagoparOrder, dataIncoming);
 
             response.success({res, data: createResponse});
         } catch (error) {

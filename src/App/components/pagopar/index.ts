@@ -1,15 +1,15 @@
 import {Router} from 'express';
 import schemaValidation from '../../utils/middlewares/schemaValidation';
 import {PagoParController} from './PagoparController';
-import {createOrderSchema} from './schemas';
+import {createOrderSchema, getPaymentSchema} from './schemas';
 
 const router = Router();
 
 /**
  * @description Obtiene los detalles de un pago de pagopar
- * @method GET
+ * @method POST
  */
-router.get('/:hash', PagoParController.getPayment);
+router.post('/payment', [schemaValidation(getPaymentSchema)], PagoParController.getPayment);
 
 /**
  * @description Endpoint de respuesta de un pago PARA Pagopar
