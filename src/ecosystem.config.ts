@@ -11,7 +11,7 @@ module.exports = {
                 HOST: 'localhost',
                 PUBLIC_ROUTE: 'public',
                 STRIPE_SECRET_KEY:
-                    'sk_test_51JoahML8qjTIUa3unal5TRlOseiuOJ4KzMIxPOOanwFNZELfDLZYNTqqFxjfch37k1MW8mo9dCPtnqmHwpVVD9XJ009075GQpX',
+                    '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',
                 APP_SECRET_KEY: 'ffbfe62b-a0e3-44d7-995d-314f672153f9',
                 RAZER_APP_CODE: '202102160443',
                 RAZER_APP_SECRET_KEY: 'lbrb4964',
